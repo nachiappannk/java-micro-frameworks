@@ -1,1 +1,45 @@
+# macOS
 .DS_Store
+Thumbs.db
+
+# IDEs and editors
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+.classpath
+.project
+.settings/
+
+# Java / build outputs
+*.class
+*.jar
+*.war
+*.ear
+*.log
+*.tmp
+*.pid
+
+# Maven
+**/target/
+target/
+
+# Gradle
+**/build/
+build/
+.gradle/
+!gradle/wrapper/gradle-wrapper.jar
+
+# IntelliJ / Eclipse generated files
+out/
+bin/
+
+# Environment and secrets
+.env
+.env.*
+*.local
+
+# OS swap files
+*.swp
+*.swo
