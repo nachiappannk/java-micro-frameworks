@@ -22,6 +22,26 @@ public class CallerResponseBodyAdvice implements ResponseBodyAdvice<Object> {
     @Override
     public boolean supports(MethodParameter returnType,
                             Class<? extends HttpMessageConverter<?>> converterType) {
+        var a = 4;
+
+        System.out.println("=== MethodParameter dump ===");
+        System.out.println("toString           = " + returnType);
+        System.out.println("method             = " + returnType.getMethod());
+        System.out.println("containingClass    = " + returnType.getContainingClass());
+        System.out.println("declaringClass     = " + returnType.getDeclaringClass());
+        System.out.println("parameterType      = " + returnType.getParameterType());
+        // System.out.println("type               = " + returnType.getType());
+        System.out.println("nestedType         = " + returnType.getNestedParameterType());
+        System.out.println("genericType        = " + returnType.getGenericParameterType());
+        System.out.println("parameterName      = " + returnType.getParameterName());
+        System.out.println("executable         = " + returnType.getExecutable());
+        // System.out.println("annotations        = " + java.util.Arrays.toString(returnType.getAnnotations()));
+        System.out.println("methodAnnotations  = " + java.util.Arrays.toString(returnType.getMethodAnnotations()));
+        System.out.println("parameterAnnotations = " + java.util.Arrays.toString(returnType.getParameterAnnotations()));
+        System.out.println("hasGetMapping      = " + returnType.hasMethodAnnotation(org.springframework.web.bind.annotation.GetMapping.class));
+        System.out.println("hasRequestMapping  = " + returnType.hasMethodAnnotation(org.springframework.web.bind.annotation.RequestMapping.class));
+        System.out.println("converterType      = " + converterType);
+        System.out.println("=== end ===");
         return true;
     }
 
