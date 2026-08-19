@@ -1,7 +1,5 @@
 package com.nachiappan.response_adapter_demo;
 
-import java.util.HashMap;
-import java.util.Map;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,13 +9,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class ApplicationController {
 
     @GetMapping("/connection")
-    public Map<String, Object> connection() {
-        Map<String, Object> connectionInfo = new HashMap<>();
-        connectionInfo.put("status", "connected");
-        connectionInfo.put("protocol", "http");
-        connectionInfo.put("host", "localhost");
-        connectionInfo.put("port", 8080);
-        connectionInfo.put("environment", "dummy");
-        return connectionInfo;
+    public ConnectionResponse connection() {
+        ConnectionResponse connectionResponse = new ConnectionResponse();
+        connectionResponse.setStatus("connected");
+        connectionResponse.setProtocol("http");
+        connectionResponse.setHost("localhost");
+        connectionResponse.setPort(8080);
+        connectionResponse.setEnvironment("dummy");
+        return connectionResponse;
     }
 }
