@@ -7,7 +7,7 @@
 - Step Into (F7)
 - Smart Step Into (Shift+F7)
 - Step Out (Shift+F8)
-- Run to Cursor
+- Run to Cursor (with Force) 
 - Call Stack
 - Stack Frames
 - Variables window
