@@ -61,6 +61,9 @@ public class AdaptedConnectionResponse {
     public String getPortCategory() { return portCategory; }
     public void setPortCategory(String portCategory) { this.portCategory = portCategory; }
 
+    public String getCrap() { return "crap"; }
+
+
     // Request-related properties
     private String requestMethod;
     private String requestUrl;
