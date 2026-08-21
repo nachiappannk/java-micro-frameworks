@@ -43,7 +43,7 @@ public class CallerResponseBodyAdvice implements ResponseBodyAdvice<Object> {
         Map<String, List<String>> headers = new HashMap<>();
         request.getHeaders().forEach((k, v) -> headers.put(k, new ArrayList<>(v)));
 
-        AdaptedConnectionResponse adapted = AdaptedConnectionResponse.from(original, method, url, domain, headers);
+        AdaptedConnectionResponse adapted = ConnectionResponseAdapter.adapt(original, method, url, domain, headers);
         return adapted;
     }
 }
