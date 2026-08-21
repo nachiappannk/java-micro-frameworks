@@ -8,6 +8,12 @@ import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
+import java.net.URI;
+import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 @ControllerAdvice
 public class CallerResponseBodyAdvice implements ResponseBodyAdvice<Object> {
 
@@ -28,7 +34,16 @@ public class CallerResponseBodyAdvice implements ResponseBodyAdvice<Object> {
             return body;
         }
 
-        AdaptedConnectionResponse adapted = AdaptedConnectionResponse.from(original);
+        // Extract simple values and pass them to the adapter (avoid passing request objects)
+        String method = request.getMethod() == null ? null : request.getMethod().name();
+        URI uri = request.getURI();
+        String url = uri == null ? null : uri.toString();
+        String domain = uri == null ? null : uri.getHost();
+
+        Map<String, List<String>> headers = new HashMap<>();
+        request.getHeaders().forEach((k, v) -> headers.put(k, new ArrayList<>(v)));
+
+        AdaptedConnectionResponse adapted = AdaptedConnectionResponse.from(original, method, url, domain, headers);
         return adapted;
     }
 }

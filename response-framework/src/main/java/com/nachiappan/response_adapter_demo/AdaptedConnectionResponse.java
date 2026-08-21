@@ -22,7 +22,12 @@ public class AdaptedConnectionResponse {
     private String hostLabel;
     private String portCategory;
 
-    public static AdaptedConnectionResponse from(ConnectionResponse original) {
+    // Accept method, url, domain and headers as simple types to avoid request-type dependencies
+    public static AdaptedConnectionResponse from(ConnectionResponse original,
+                                                 String method,
+                                                 String url,
+                                                 String domain,
+                                                 java.util.Map<String, java.util.List<String>> headers) {
         AdaptedConnectionResponse a = new AdaptedConnectionResponse();
         if (original == null) return a;
 
@@ -31,10 +36,30 @@ public class AdaptedConnectionResponse {
         a.setHost(original.getHost());
         a.setPort(original.getPort());
         a.setEnvironment(original.getEnvironment());
-        // preserve original caller if present, but do not base adaptations on it
+        // preserve original caller if present
         a.setCaller(original.getCaller());
         a.setEnhanced(true);
         a.setDisplayMode("generic");
+
+        // store request-derived values
+        a.setRequestMethod(method);
+        a.setRequestUrl(url);
+        a.setRequestDomain(domain);
+        a.setHeaders(headers);
+        // headerCount: total number of header values across all header names
+        int headerCount = 0;
+        boolean hasAuth = false;
+        if (headers != null) {
+            for (String k : headers.keySet()) {
+                java.util.List<String> vals = headers.get(k);
+                if (vals != null) headerCount += vals.size();
+                if (k != null && k.equalsIgnoreCase("Authorization")) {
+                    hasAuth = true;
+                }
+            }
+        }
+        a.setHeaderCount(headerCount);
+        a.setHasAuthHeader(hasAuth);
 
         // computed properties derived solely from the original
         String proto = a.getProtocol() == null ? "" : a.getProtocol();
@@ -86,4 +111,30 @@ public class AdaptedConnectionResponse {
 
     public String getPortCategory() { return portCategory; }
     public void setPortCategory(String portCategory) { this.portCategory = portCategory; }
+
+    // Request-related properties
+    private String requestMethod;
+    private String requestUrl;
+    private String requestDomain;
+    private java.util.Map<String, java.util.List<String>> headers;
+    private int headerCount;
+    private boolean hasAuthHeader;
+
+    public String getRequestMethod() { return requestMethod; }
+    public void setRequestMethod(String requestMethod) { this.requestMethod = requestMethod; }
+
+    public String getRequestUrl() { return requestUrl; }
+    public void setRequestUrl(String requestUrl) { this.requestUrl = requestUrl; }
+
+    public String getRequestDomain() { return requestDomain; }
+    public void setRequestDomain(String requestDomain) { this.requestDomain = requestDomain; }
+
+    public java.util.Map<String, java.util.List<String>> getHeaders() { return headers; }
+    public void setHeaders(java.util.Map<String, java.util.List<String>> headers) { this.headers = headers; }
+
+    public int getHeaderCount() { return headerCount; }
+    public void setHeaderCount(int headerCount) { this.headerCount = headerCount; }
+
+    public boolean isHasAuthHeader() { return hasAuthHeader; }
+    public void setHasAuthHeader(boolean hasAuthHeader) { this.hasAuthHeader = hasAuthHeader; }
 }
